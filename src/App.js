@@ -1,18 +1,20 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
-function App() {
+import React, { useEffect, useState } from "react";
+
+export default function App() {
+  
   const [lat, setLat] = useState([]);
-  const [lng, setLng] = useState([]);
+  const [long, setLong] = useState([]);
   const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       navigator.geolocation.getCurrentPosition(function(position) {
         setLat(position.coords.latitude);
-        setLng(position.coords.longitude);
+        setLong(position.coords.longitude);
       });
 
-      await fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${lat}&lon=${lng}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
+      await fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${lat}&lon=${long}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
       .then(res => res.json())
       .then(result => {
         setData(result)
@@ -20,15 +22,11 @@ function App() {
       });
     }
     fetchData();
-  }, [lat,lng])
-
+  }, [lat,long])
   
-
   return (
     <div className="App">
       
     </div>
   );
 }
-
-export default App;
